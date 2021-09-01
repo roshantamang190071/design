@@ -1,6 +1,7 @@
 
 import axios from "axios";
 import { Component } from "react";
+import { Redirect } from "react-router-dom";
 
 class Login extends Component{
     
@@ -25,7 +26,11 @@ class Login extends Component{
      }
      axios.post("http://localhost:90/login/user", data)
      .then((res)=>{
-          console.log(res.data.token)
+            console.log(res.data.token)
+            //save token locally, and access anywhere in website
+            localStorage.setItem("token", res.data.token)
+            
+            
         })
         .catch((err)=>{
           console.log(err.response)
@@ -34,6 +39,10 @@ class Login extends Component{
  
 
   render(){
+
+    if(localStorage.getItem("token")){
+        window.location.href="/"
+    }
        return(
             
        <div className="page-wrapper bg-gra-03 p-t-45 p-b-50">

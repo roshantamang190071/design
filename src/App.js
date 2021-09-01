@@ -6,6 +6,8 @@ import Login from './Login/Login';
 import {Route} from "react-router-dom"
 import Home from "./Home/Home"
 import { BrowserRouter }from "react-router-dom";
+import Posts from './Posts/Posts';
+import UpdatePost from './Posts/UpdatePost';
 
 function App() {
   return (
@@ -17,7 +19,8 @@ function App() {
               <Route path="/" exact component = {Home}/>
               <Route path="/login" component = {Login}/>
               <Route path="/register" component = {Registration}/>
-              <Route path="/register" component = {Registration}/>
+              <Route path="/post" component = {Posts}/>
+              <Route path="/updatepost/:id" component= {UpdatePost}/>
 
           </div>
       </BrowserRouter>

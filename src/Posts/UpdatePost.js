@@ -1,43 +1,53 @@
-
-import { Component } from "react";
 import axios from "axios";
-import { NavLink, Redirect } from "react-router-dom";
+import { Component } from "react";
 
-class Home extends Component{
-     
-    state = {
-     tag : "",
-     content : ""
- }
+
+class UpdatePost extends Component{
+
+     state = {
+          id : this.props.match.params.id,
+          tag : "",
+          content : ""
+     }
+
+     componentDidMount(){
+          axios.get("http://localhost:90/updatepost/"+this.state.id)
+          .then((res)=>{
+               console.log(res.data)
+               this.setState({
+                         tag : res.data.tag,
+                         content : res.data.content
+               })
+          })
+          .catch()
+     }
+
+     updatepost=(e)=>{
+          e.preventDefault();
+          // data = {
+          //      tag : this.state.tag,
+          //      content : this.state.content
+          // }
+          axios.put("http://localhost:90/updatepost", this.state)
+          .then((res)=>{
+
+          })
+     }
+
 
      postState=(e)=>{
-     
-     this.setState({
-         [e.target.name] : e.target.value
-     })
-
- }
-
- addPost=(e)=>{
-     e.preventDefault();
-     const data = {
-         tag : this.state.tag,
-         content : this.state.content
+               this.setState({
+                    [e.target.name] : e.target.value
+               })
      }
-     axios.post("http://localhost:90/addpost", data)
-}
 
      render(){
-
-        if(!localStorage.getItem("token")){
-            return <Redirect to="/login"/>
-        }
           return(
                <div className="page-wrapper bg-gra-03 p-t-45 p-b-50">
                <div className="wrapper wrapper--w790">
                    <div className="card card-5">
                        <div className="card-heading">
-                           <h2 className="title">Add Post</h2>
+                           <h2 className="title">Update Post</h2>
                        </div>
                        <div className="card-body">
                            <form>
@@ -64,9 +74,8 @@ class Home extends Component{
                                
                                <div>
                                    <button className="btn btn--radius-2 btn--red" type="submit" 
-                                   onClick = {this.addPost}
-                                   >Add Post</button>
-                                  
+                                   onClick = {this.updatepost}
+                                   >Update Post</button>
                                </div>
         
                            </form>
@@ -74,9 +83,8 @@ class Home extends Component{
                    </div>
                </div>
            </div>
-        
           )
      }
 }
 
-export default Home;
+export default UpdatePost;
